@@ -315,6 +315,8 @@ export class Game {
   private advanceAfterRound(): void {
     if (this.wins.player >= ROUNDS_TO_WIN || this.wins.bot >= ROUNDS_TO_WIN) {
       this.phase = 'matchEnd';
+      // mecz rozstrzygniety - podklad muzyczny walki nie ma juz czego ilustrowac
+      this.audio.stopMusic();
       return;
     }
     this.resetRound();

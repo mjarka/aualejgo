@@ -57,6 +57,49 @@ npm run typecheck
 Gra działa **od razu** bez żadnych grafik — brakujące pliki są zastępowane
 proceduralnymi odpowiednikami. Gdy wrzucisz własne, zostaną użyte automatycznie.
 
+## Publikacja na GitHub Pages
+
+Projekt jest publikowany automatycznie przez
+[.github/workflows/deploy.yml](.github/workflows/deploy.yml) — każdy `push` na
+`main` buduje grę i wypycha ją na Pages. Adres: **https://mjarka.github.io/aualejgo/**
+
+Jednorazowo trzeba włączyć Pages w repozytorium:
+**Settings → Pages → Source: GitHub Actions**.
+
+### Dlaczego `base: '/aualejgo/'`
+
+GitHub Pages serwuje projekt pod `/<nazwa-repozytorium>/`, a nie pod korzeniem
+domeny. Bez tego przeglądarka szukałaby `/assets/...` zamiast
+`/aualejgo/assets/...` i gra nie wczytałaby ani jednej grafiki.
+
+`vite.config.ts` ustawia `base` tylko dla builda, więc lokalny dev server nadal
+działa pod `http://localhost:5173/`.
+
+### Ścieżki do assetów
+
+Grafiki i dźwięki są zwykłymi stringami w konfiguracji, więc **Vite ich nie
+przepisuje**. Dlatego każda ścieżka przechodzi przez
+[assetUrl()](src/game/assets/url.ts), które dokleja `import.meta.env.BASE_URL`:
+
+```ts
+sheet: assetUrl('assets/sprites/c1/idle.png'),
+```
+
+Dodając nowy asset, użyj `assetUrl(...)` zamiast zapisywać `/assets/...` na
+sztywno — inaczej zadziała lokalnie, ale nie na Pages. Wyjątkiem jest
+`index.html`, gdzie Vite sam podmienia `%BASE_URL%`.
+
+### Alternatywa bez Actions
+
+Można też zbudować lokalnie i wypchnąć katalog `dist` na gałąź `gh-pages`:
+
+```bash
+npm run build
+npx gh-pages -d dist
+```
+
+Wtedy w **Settings → Pages → Source** wybierz gałąź `gh-pages`.
+
 ## Sterowanie
 
 | Klawisz | Akcja |
@@ -166,16 +209,16 @@ Wystarczy wpis w `animationSheets` w
 
 ```ts
 animationSheets: {
-  idle:        { sheet: '/assets/sprites/c1/idle.png', columns: 2, rows: 2 },
-  walkForward: { sheet: '/assets/sprites/c1/walk.png', columns: 2, rows: 2 },
-  walkBack:    { sheet: '/assets/sprites/c1/walk.png', columns: 2, rows: 2 },
-  jump:        { sheet: '/assets/sprites/c1/jump.png', columns: 1, rows: 1 },
-  block:       { sheet: '/assets/sprites/c1/block.png', columns: 1, rows: 1 },
-  lightAttack: { sheet: '/assets/sprites/c1/punch1.png', columns: 1, rows: 1 },
-  heavyAttack: { sheet: '/assets/sprites/c1/punch2.png', columns: 1, rows: 1 },
-  hit:         { sheet: '/assets/sprites/c1/hit.png', columns: 1, rows: 1 },
-  airAttack:   { sheet: '/assets/sprites/c1/airkickc1.png', columns: 1, rows: 1 },
-  victory:     { sheet: '/assets/sprites/c1/winc1.png', columns: 2, rows: 2 },
+  idle:        { sheet: assetUrl('assets/sprites/c1/idle.png'), columns: 2, rows: 2 },
+  walkForward: { sheet: assetUrl('assets/sprites/c1/walk.png'), columns: 2, rows: 2 },
+  walkBack:    { sheet: assetUrl('assets/sprites/c1/walk.png'), columns: 2, rows: 2 },
+  jump:        { sheet: assetUrl('assets/sprites/c1/jump.png'), columns: 1, rows: 1 },
+  block:       { sheet: assetUrl('assets/sprites/c1/block.png'), columns: 1, rows: 1 },
+  lightAttack: { sheet: assetUrl('assets/sprites/c1/punch1.png'), columns: 1, rows: 1 },
+  heavyAttack: { sheet: assetUrl('assets/sprites/c1/punch2.png'), columns: 1, rows: 1 },
+  hit:         { sheet: assetUrl('assets/sprites/c1/hit.png'), columns: 1, rows: 1 },
+  airAttack:   { sheet: assetUrl('assets/sprites/c1/airkickc1.png'), columns: 1, rows: 1 },
+  victory:     { sheet: assetUrl('assets/sprites/c1/winc1.png'), columns: 2, rows: 2 },
 },
 ```
 
@@ -239,10 +282,10 @@ jak grafiki). Wraz z otrzymywanymi obrażeniami portret się zmienia — lista
 
 ```ts
 damagePortraits: [
-  '/assets/portraits/c1_0.png',  // pełne zdrowie
-  '/assets/portraits/c1_1.png',
-  '/assets/portraits/c1_2.png',
-  '/assets/portraits/c1_3.png',  // blisko nokautu
+  assetUrl('assets/portraits/c1_0.png'),  // pełne zdrowie
+  assetUrl('assets/portraits/c1_1.png'),
+  assetUrl('assets/portraits/c1_2.png'),
+  assetUrl('assets/portraits/c1_3.png'),  // blisko nokautu
 ],
 ```
 
@@ -316,15 +359,19 @@ Osiem efektów + muzyka w `public/assets/audio/`:
 | `ko.mp3` | Nokaut |
 | `jump.mp3` | Skok |
 | `ui.mp3` | Interfejs |
-| `music.mp3` | Muzyka w tle (zapętlona) |
+| `soundtrack.mp3` | Podkład walki (zapętlony) |
 Obsługiwane formaty: `.mp3`, `.ogg`, `.wav` — zmień rozszerzenia w
 [audio.ts](src/game/assets/audio.ts) (`SFX_FILES`, `MUSIC_FILE`).
 
 **Brak plików nie jest błędem.** Efekty są wtedy syntezowane proceduralnie przez
 WebAudio, a muzyka po prostu nie gra.
 
+`soundtrack.mp3` leci w pętli od momentu, gdy na ekranie pojawia się „FIGHT!”,
+aż do rozstrzygnięcia meczu. Wyciszenie przyciskiem 🔊 zatrzymuje podkład, a
+odciszenie wznawia go w tym samym miejscu walki.
+
 > Przeglądarki blokują dźwięk do pierwszego gestu użytkownika. Audio startuje
-> po kliknięciu „Start walki”.
+> po kliknięciu „Walcz”.
 
 ---
 

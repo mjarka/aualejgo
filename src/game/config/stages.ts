@@ -1,5 +1,6 @@
 import type { StageDef } from '../types';
 import { WORLD_WIDTH } from '../constants';
+import { assetUrl } from '../assets/url';
 
 /**
  * Arena walki.
@@ -19,8 +20,8 @@ import { WORLD_WIDTH } from '../constants';
 export const STAGE: StageDef = {
   id: 'street',
   name: 'Ulica',
-  background: '/assets/backgrounds/bgr.jpg',
-  road: '/assets/backgrounds/road.jpg',
+  background: assetUrl('assets/backgrounds/bgr.jpg'),
+  road: assetUrl('assets/backgrounds/road.jpg'),
   groundColor: '#1b1a20',
   groundAccent: '#33303a',
 };

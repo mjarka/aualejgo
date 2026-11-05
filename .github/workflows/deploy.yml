@@ -1,0 +1,52 @@
+name: Deploy do GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  # pozwala uruchomic publikacje recznie z zakladki Actions
+  workflow_dispatch:
+
+# GITHUB_TOKEN potrzebuje tych uprawnien, zeby opublikowac artefakt na Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# jesli wypchniemy dwa commity pod rzad, publikujemy tylko najnowszy
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # `npm ci` instaluje dokladnie wersje z package-lock.json
+      - run: npm ci
+
+      # `npm run build` uruchamia najpierw tsc --noEmit, wiec blad typow
+      # zatrzyma publikacje zamiast wypuscic zepsuta wersje
+      - run: npm run build
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

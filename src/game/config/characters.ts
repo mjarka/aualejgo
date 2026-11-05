@@ -1,5 +1,6 @@
 import type { AnimName, AnimDef, CharacterDef, CharacterId } from '../types';
 import { CHARACTER_HEIGHT, MAX_ANIM_FRAMES } from '../constants';
+import { assetUrl } from '../assets/url';
 
 /**
  * Domyslny uklad siatki spritesheeta.
@@ -94,28 +95,28 @@ export const CHARACTER_LIST: readonly CharacterDef[] = [
     ...baseCharacter,
     id: 'c1',
     name: 'Sheeva',
-    sheet: '/assets/sprites/c1.png',
-    portrait: '/assets/portraits/c1.png',
+    sheet: assetUrl('assets/sprites/c1.png'),
+    portrait: assetUrl('assets/portraits/c1.png'),
     damagePortraits: [
-      '/assets/portraits/c1_0.png',
-      '/assets/portraits/c1_1.png',
-      '/assets/portraits/c1_2.png',
-      '/assets/portraits/c1_3.png',
+      assetUrl('assets/portraits/c1_0.png'),
+      assetUrl('assets/portraits/c1_1.png'),
+      assetUrl('assets/portraits/c1_2.png'),
+      assetUrl('assets/portraits/c1_3.png'),
     ],
     // cykl chodu dostarczony osobno, klatki ulozone w siatce 2x2
     // grafika jest narysowana w lewo, wiec przy patrzeniu w prawo jest odbijana
     sheetFacing: 'left',
     animationSheets: {
-      idle: { sheet: '/assets/sprites/c1/idle.png', columns: 2, rows: 2 },
-      walkForward: { sheet: '/assets/sprites/c1/walk.png', columns: 2, rows: 2 },
-      walkBack: { sheet: '/assets/sprites/c1/walk.png', columns: 2, rows: 2 },
-      jump: { sheet: '/assets/sprites/c1/jump.png', columns: 1, rows: 1 },
-      block: { sheet: '/assets/sprites/c1/block.png', columns: 1, rows: 1 },
-      lightAttack: { sheet: '/assets/sprites/c1/punch1.png', columns: 1, rows: 1 },
-      heavyAttack: { sheet: '/assets/sprites/c1/punch2.png', columns: 1, rows: 1 },
-      hit: { sheet: '/assets/sprites/c1/hit.png', columns: 1, rows: 1 },
-      airAttack: { sheet: '/assets/sprites/c1/airkickc1.png', columns: 1, rows: 1 },
-      victory: { sheet: '/assets/sprites/c1/winc1.png', columns: 2, rows: 2 },
+      idle: { sheet: assetUrl('assets/sprites/c1/idle.png'), columns: 2, rows: 2 },
+      walkForward: { sheet: assetUrl('assets/sprites/c1/walk.png'), columns: 2, rows: 2 },
+      walkBack: { sheet: assetUrl('assets/sprites/c1/walk.png'), columns: 2, rows: 2 },
+      jump: { sheet: assetUrl('assets/sprites/c1/jump.png'), columns: 1, rows: 1 },
+      block: { sheet: assetUrl('assets/sprites/c1/block.png'), columns: 1, rows: 1 },
+      lightAttack: { sheet: assetUrl('assets/sprites/c1/punch1.png'), columns: 1, rows: 1 },
+      heavyAttack: { sheet: assetUrl('assets/sprites/c1/punch2.png'), columns: 1, rows: 1 },
+      hit: { sheet: assetUrl('assets/sprites/c1/hit.png'), columns: 1, rows: 1 },
+      airAttack: { sheet: assetUrl('assets/sprites/c1/airkickc1.png'), columns: 1, rows: 1 },
+      victory: { sheet: assetUrl('assets/sprites/c1/winc1.png'), columns: 2, rows: 2 },
     },
     palette: {
       skin: '#d9a06a',
@@ -128,28 +129,28 @@ export const CHARACTER_LIST: readonly CharacterDef[] = [
     ...baseCharacter,
     id: 'c2',
     name: 'Jade',
-    sheet: '/assets/sprites/c2.png',
-    portrait: '/assets/portraits/c2.png',
+    sheet: assetUrl('assets/sprites/c2.png'),
+    portrait: assetUrl('assets/portraits/c2.png'),
     damagePortraits: [
-      '/assets/portraits/c2_0.png',
-      '/assets/portraits/c2_1.png',
-      '/assets/portraits/c2_2.png',
-      '/assets/portraits/c2_3.png',
+      assetUrl('assets/portraits/c2_0.png'),
+      assetUrl('assets/portraits/c2_1.png'),
+      assetUrl('assets/portraits/c2_2.png'),
+      assetUrl('assets/portraits/c2_3.png'),
     ],
     // cykl chodu dostarczony osobno, klatki ulozone w siatce 2x2
     // grafika jest narysowana w lewo, wiec przy patrzeniu w prawo jest odbijana
     sheetFacing: 'left',
     animationSheets: {
-      idle: { sheet: '/assets/sprites/c2/idle.png', columns: 2, rows: 2 },
-      walkForward: { sheet: '/assets/sprites/c2/walk.png', columns: 2, rows: 2 },
-      walkBack: { sheet: '/assets/sprites/c2/walk.png', columns: 2, rows: 2 },
-      jump: { sheet: '/assets/sprites/c2/jump.png', columns: 1, rows: 1 },
-      block: { sheet: '/assets/sprites/c2/block.png', columns: 1, rows: 1 },
-      lightAttack: { sheet: '/assets/sprites/c2/punch1.png', columns: 1, rows: 1 },
-      heavyAttack: { sheet: '/assets/sprites/c2/punch2.png', columns: 1, rows: 1 },
-      hit: { sheet: '/assets/sprites/c2/hit.png', columns: 1, rows: 1 },
-      airAttack: { sheet: '/assets/sprites/c2/airkickc2.png', columns: 1, rows: 1 },
-      victory: { sheet: '/assets/sprites/c2/winc2.png', columns: 2, rows: 2 },
+      idle: { sheet: assetUrl('assets/sprites/c2/idle.png'), columns: 2, rows: 2 },
+      walkForward: { sheet: assetUrl('assets/sprites/c2/walk.png'), columns: 2, rows: 2 },
+      walkBack: { sheet: assetUrl('assets/sprites/c2/walk.png'), columns: 2, rows: 2 },
+      jump: { sheet: assetUrl('assets/sprites/c2/jump.png'), columns: 1, rows: 1 },
+      block: { sheet: assetUrl('assets/sprites/c2/block.png'), columns: 1, rows: 1 },
+      lightAttack: { sheet: assetUrl('assets/sprites/c2/punch1.png'), columns: 1, rows: 1 },
+      heavyAttack: { sheet: assetUrl('assets/sprites/c2/punch2.png'), columns: 1, rows: 1 },
+      hit: { sheet: assetUrl('assets/sprites/c2/hit.png'), columns: 1, rows: 1 },
+      airAttack: { sheet: assetUrl('assets/sprites/c2/airkickc2.png'), columns: 1, rows: 1 },
+      victory: { sheet: assetUrl('assets/sprites/c2/winc2.png'), columns: 2, rows: 2 },
     },
     palette: {
       skin: '#e8b98f',

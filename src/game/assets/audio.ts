@@ -6,21 +6,24 @@
  * nawet bez assetow.
  */
 
+import { assetUrl } from './url';
+
 export type SfxName = 'light' | 'heavy' | 'special' | 'block' | 'hit' | 'ko' | 'jump' | 'ui';
 
 /** Domyslne pliki audio - podmien na wlasne w public/assets/audio. */
 export const SFX_FILES: Record<SfxName, string> = {
-  light: '/assets/audio/light.mp3',
-  heavy: '/assets/audio/heavy.mp3',
-  special: '/assets/audio/special.mp3',
-  block: '/assets/audio/block.mp3',
-  hit: '/assets/audio/hit.mp3',
-  ko: '/assets/audio/ko.mp3',
-  jump: '/assets/audio/jump.mp3',
-  ui: '/assets/audio/ui.mp3',
+  light: assetUrl('assets/audio/light.mp3'),
+  heavy: assetUrl('assets/audio/heavy.mp3'),
+  special: assetUrl('assets/audio/special.mp3'),
+  block: assetUrl('assets/audio/block.mp3'),
+  hit: assetUrl('assets/audio/hit.mp3'),
+  ko: assetUrl('assets/audio/ko.mp3'),
+  jump: assetUrl('assets/audio/jump.mp3'),
+  ui: assetUrl('assets/audio/ui.mp3'),
 };
 
-export const MUSIC_FILE = '/assets/audio/music.mp3';
+/** Podklad muzyczny walki - leci od slowa "FIGHT!" do powrotu do wyboru postaci. */
+export const MUSIC_FILE = assetUrl('assets/audio/soundtrack.mp3');
 
 export class AudioManager {
   readonly ctx: AudioContext;
@@ -31,6 +34,8 @@ export class AudioManager {
   private musicSource: AudioBufferSourceNode | null = null;
   private musicBuffer: AudioBuffer | null = null;
   private muted = false;
+  /** Czy muzyka ma grac - pozwala wznowic ja po odciszeniu w trakcie walki. */
+  private musicWanted = false;
 
   constructor(ctx: AudioContext) {
     this.ctx = ctx;
@@ -59,6 +64,10 @@ export class AudioManager {
   setMuted(muted: boolean): void {
     this.muted = muted;
     this.master.gain.value = muted ? 0 : 0.9;
+    // wyciszenie zatrzymuje podklad, ale nie kasuje zyczenia jego gry -
+    // dzieki temu odciszenie w trakcie walki wznowi muzyke
+    if (muted) this.haltMusic();
+    else if (this.musicWanted) this.startMusic();
   }
 
   /**
@@ -96,7 +105,9 @@ export class AudioManager {
     this.playProcedural(name, volume);
   }
 
+  /** Uruchamia podklad muzyczny (od slowa "FIGHT!" do konca walki). */
   startMusic(): void {
+    this.musicWanted = true;
     if (!this.musicBuffer || this.musicSource || this.muted) return;
     const src = this.ctx.createBufferSource();
     src.buffer = this.musicBuffer;
@@ -106,7 +117,14 @@ export class AudioManager {
     this.musicSource = src;
   }
 
+  /** Zatrzymuje podklad - wyjscie z walki, koniec meczu. */
   stopMusic(): void {
+    this.musicWanted = false;
+    this.haltMusic();
+  }
+
+  /** Zatrzymuje odtwarzanie, nie zmieniajac tego, czy muzyka ma grac. */
+  private haltMusic(): void {
     if (!this.musicSource) return;
     try {
       this.musicSource.stop();
