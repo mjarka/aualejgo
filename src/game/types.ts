@@ -68,6 +68,23 @@ export interface AnimSheetDef {
    * postac ma zachowac identyczny rozmiar miedzy animacjami.
    */
   scale?: number;
+  /**
+   * Wedlug czego dopasowac rozmiar postaci, gdy skala nie jest podana.
+   *
+   * `height` (domyslnie) bierze wysokosc obrysu - dobre dla postaci stojacych.
+   * `width` bierze szerokosc, co jest konieczne dla pozy lezacej: jej "wzrost"
+   * to dlugosc ciala, wiec dopasowanie po wysokosci rozciagneloby postac na
+   * cala szerokosc klatki.
+   */
+  fit?: 'height' | 'width';
+  /**
+   * Na czym zakotwiczyc klatke w poziomie.
+   *
+   * `hips` (domyslnie) stawia biodra na osi postaci - dobre dla postaci
+   * stojacych i atakow. `center` stawia na osi srodek obrysu, co jest jedynym
+   * sensownym wyborem dla pozy lezacej, gdzie nie da sie wskazac bioder.
+   */
+  anchor?: 'hips' | 'center';
 }
 
 export interface CharacterDef {

@@ -22,12 +22,13 @@ export const ANIM_LAYOUT: Record<AnimName, AnimDef> = {
   jump: { row: 4, frames: 1, fps: 10, loop: false },
   lightAttack: { row: 5, frames: 1, fps: 14, loop: false },
   heavyAttack: { row: 6, frames: 1, fps: 12, loop: false },
-  special: { row: 7, frames: 6, fps: 12, loop: false },
+  special: { row: 7, frames: 1, fps: 12, loop: false },
   block: { row: 8, frames: 1, fps: 6, loop: true },
   hit: { row: 9, frames: 1, fps: 12, loop: false },
-  knockdown: { row: 10, frames: 5, fps: 8, loop: false },
-  // 12.5 fps = 80 ms na klatke - zwycieska poza ma byc wolna i czytelna
-  victory: { row: 11, frames: 4, fps: 12.5, loop: true },
+  knockdown: { row: 10, frames: 1, fps: 8, loop: false },
+  // 10 fps = 100 ms na klatke - zwycieska poza ma byc wolna i czytelna.
+  // 100 ms to dokladnie 6 taktow symulacji (60 Hz), wiec klatki sa rowne.
+  victory: { row: 11, frames: 4, fps: 10, loop: true },
   defeat: { row: 12, frames: 4, fps: 6, loop: true },
   airAttack: { row: 13, frames: 1, fps: 12, loop: false },
 };
@@ -116,6 +117,16 @@ export const CHARACTER_LIST: readonly CharacterDef[] = [
       heavyAttack: { sheet: assetUrl('assets/sprites/c1/punch2.png'), columns: 1, rows: 1 },
       hit: { sheet: assetUrl('assets/sprites/c1/hit.png'), columns: 1, rows: 1 },
       airAttack: { sheet: assetUrl('assets/sprites/c1/airkickc1.png'), columns: 1, rows: 1 },
+      special: { sheet: assetUrl('assets/sprites/c1/forcec1.png'), columns: 1, rows: 1 },
+      // pozy lezace mierzymy po szerokosci - inaczej postac rozciagnelaby sie
+      // na cala klatke, bo jej "wzrost" to dlugosc ciala
+      knockdown: {
+        sheet: assetUrl('assets/sprites/c1/beatenc1.png'),
+        columns: 1,
+        rows: 1,
+        fit: 'width',
+        anchor: 'center',
+      },
       victory: { sheet: assetUrl('assets/sprites/c1/winc1.png'), columns: 2, rows: 2 },
     },
     palette: {
@@ -150,6 +161,14 @@ export const CHARACTER_LIST: readonly CharacterDef[] = [
       heavyAttack: { sheet: assetUrl('assets/sprites/c2/punch2.png'), columns: 1, rows: 1 },
       hit: { sheet: assetUrl('assets/sprites/c2/hit.png'), columns: 1, rows: 1 },
       airAttack: { sheet: assetUrl('assets/sprites/c2/airkickc2.png'), columns: 1, rows: 1 },
+      special: { sheet: assetUrl('assets/sprites/c2/forcec2.png'), columns: 1, rows: 1 },
+      knockdown: {
+        sheet: assetUrl('assets/sprites/c2/beatenc2.png'),
+        columns: 1,
+        rows: 1,
+        fit: 'width',
+        anchor: 'center',
+      },
       victory: { sheet: assetUrl('assets/sprites/c2/winc2.png'), columns: 2, rows: 2 },
     },
     palette: {

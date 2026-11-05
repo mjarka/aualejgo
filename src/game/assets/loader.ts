@@ -185,8 +185,9 @@ const bodyAnchorX = (data: Uint8ClampedArray, width: number, bounds: Bounds): nu
  * po wierszu i wpisujemy do jednego poziomego rzedu, dzieki czemu dalszy kod
  * widzi zwykly arkusz.
  *
- * Skala jest dobierana tak, aby najwyzsza klatka cyklu miala wysokosc postaci,
- * a jej stopy trafialy na `originY`. Wszystkie klatki dostaja te sama skale,
+ * Skala jest dobierana tak, aby najwieksza klatka cyklu miala rozmiar postaci
+ * (`fit`: wysokosc dla postaci stojacych, szerokosc dla lezacych), a jej
+ * najnizszy punkt trafial na `originY`. Wszystkie klatki dostaja te sama skale,
  * wiec postac nie "skacze" w trakcie animacji.
  */
 const pasteAnimationSheet = (
@@ -234,14 +235,19 @@ const pasteAnimationSheet = (
     const data = cctx.getImageData(0, 0, canvas.width, canvas.height).data;
     const bounds = alphaBounds(data, canvas.width, canvas.height);
     if (bounds) {
-      cells.push({ canvas, bounds, anchorX: bodyAnchorX(data, canvas.width, bounds) });
+      const anchorX =
+        grid.anchor === 'center' ? bounds.w / 2 : bodyAnchorX(data, canvas.width, bounds);
+      cells.push({ canvas, bounds, anchorX });
     }
   }
   if (cells.length === 0) return;
 
-  // najwyzsza klatka wyznacza skale - reszta jest rysowana w tej samej skali
-  const tallest = cells.reduce((a, b) => (b.bounds.h > a.bounds.h ? b : a));
-  const scale = grid.scale ?? def.bodyH / tallest.bounds.h;
+  // najwieksza klatka wyznacza skale - reszta jest rysowana w tej samej skali.
+  // Pozy lezace mierzymy po szerokosci, bo ich "wzrost" to dlugosc ciala.
+  const fitWidth = grid.fit === 'width';
+  const extent = (b: Bounds): number => (fitWidth ? b.w : b.h);
+  const largest = cells.reduce((a, b) => (extent(b.bounds) > extent(a.bounds) ? b : a));
+  const scale = grid.scale ?? def.bodyH / extent(largest.bounds);
 
   const startCol = animDef.startCol ?? 0;
   for (let frame = 0; frame < cells.length; frame++) {

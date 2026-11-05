@@ -518,7 +518,11 @@ export class Fighter {
     if (won) {
       this.state = 'victory';
       this.playAnim('victory', true);
-    } else {
+      return;
+    }
+    // Po nokdaunie przegrany zostaje na ziemi - wstawanie po K.O. wygladaloby
+    // jak nic sie nie stalo. Poza stojaca jest tylko dla przegranej na czas.
+    if (this.state !== 'knockdown') {
       this.state = 'defeat';
       this.playAnim('defeat', true);
     }

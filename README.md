@@ -155,10 +155,10 @@ row  3  crouch   crouch   ─        ─        ─        ─        ─       
 row  4  jump     ─        ─        ─        ─        ─        ─        ─
 row  5  light    ─        ─        ─        ─        ─        ─        ─
 row  6  heavy    ─        ─        ─        ─        ─        ─        ─
-row  7  special  special  special  special  special  special  ─        ─
+row  7  special  ─        ─        ─        ─        ─        ─        ─
 row  8  block    ─        ─        ─        ─        ─        ─        ─
 row  9  hit      ─        ─        ─        ─        ─        ─        ─
-row 10  down     down     down     down     down     ─        ─        ─
+row 10  down     ─        ─        ─        ─        ─        ─        ─
 row 11  victory  victory  victory  victory  ─        ─        ─        ─
 row 12  defeat   defeat   defeat   defeat   ─        ─        ─        ─
 row 13  air      ─        ─        ─        ─        ─        ─        ─
@@ -190,6 +190,10 @@ Puste komórki po prawej są ignorowane — nie musisz ich wypełniać.
 | `public/assets/sprites/c2/airkickc2.png` | Cios w powietrzu postaci 2 (1 klatka) | ✔ dostarczony |
 | `public/assets/sprites/c1/winc1.png` | Poza zwycięstwa postaci 1 (2×2 klatki) | ✔ dostarczony |
 | `public/assets/sprites/c2/winc2.png` | Poza zwycięstwa postaci 2 (2×2 klatki) | ✔ dostarczony |
+| `public/assets/sprites/c1/forcec1.png` | Atak specjalny postaci 1 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c2/forcec2.png` | Atak specjalny postaci 2 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c1/beatenc1.png` | Poza leżąca postaci 1 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c2/beatenc2.png` | Poza leżąca postaci 2 (1 klatka) | ✔ dostarczony |
 | `public/assets/portraits/c1.png` | Portret do ekranu wyboru | ✔ dostarczony |
 | `public/assets/portraits/c2.png` | Portret do ekranu wyboru | ✔ dostarczony |
 | `public/assets/portraits/c1_0..c1_3.png` | Portrety obrażeń postaci 1 (0 = nietknięta) | ✔ dostarczony |
@@ -218,18 +222,26 @@ animationSheets: {
   heavyAttack: { sheet: assetUrl('assets/sprites/c1/punch2.png'), columns: 1, rows: 1 },
   hit:         { sheet: assetUrl('assets/sprites/c1/hit.png'), columns: 1, rows: 1 },
   airAttack:   { sheet: assetUrl('assets/sprites/c1/airkickc1.png'), columns: 1, rows: 1 },
+  special:     { sheet: assetUrl('assets/sprites/c1/forcec1.png'), columns: 1, rows: 1 },
   victory:     { sheet: assetUrl('assets/sprites/c1/winc1.png'), columns: 2, rows: 2 },
+  knockdown:   {
+    sheet: assetUrl('assets/sprites/c1/beatenc1.png'),
+    columns: 1,
+    rows: 1,
+    fit: 'width',
+    anchor: 'center',
+  },
 },
 ```
 
 Liczba klatek w `ANIM_LAYOUT` musi się zgadzać z liczbą klatek w pliku
 (`columns × rows`), inaczej animacja migałaby pustymi klatkami. Dlatego `jump`,
-`block`, `lightAttack`, `heavyAttack`, `hit` i `airAttack` mają po **1 klatce**
-— są dostarczone jako pojedyncze obrazki.
+`block`, `lightAttack`, `heavyAttack`, `hit`, `airAttack`, `special`
+i `knockdown` mają po **1 klatce** — są dostarczone jako pojedyncze obrazki.
 
 **Tempo animacji** ustawiasz przez `fps`. Poza zwycięstwa ma być wolna
-i czytelna, więc `victory` ma `fps: 12.5`, czyli **80 ms na klatkę**
-(przy 60 Hz symulacji wychodzi 79.2 ms — różnica to kwantyzacja).
+i czytelna, więc `victory` ma `fps: 10`, czyli **100 ms na klatkę** (przy 60 Hz
+symulacji to dokładnie 6 taktów, więc klatki wychodzą równe).
 
 Klatki mogą leżeć w dowolnej siatce (`columns` × `rows`) — loader czyta je
 wierszami (lewo→prawo, potem następny wiersz) i składa w jeden poziomy rząd
@@ -239,11 +251,20 @@ wewnątrz arkusza postaci. Reszta kodu nie widzi różnicy.
 jest skalowana do `bodyH` (180 px), a jej stopy trafiają na `originY`. Wszystkie
 klatki dostają **tę samą skalę**, więc postać nie skacze w trakcie animacji.
 
-**Poziome zakotwiczenie** to środek bioder, a nie środek obrysu. Przy ciosie
-wyciągnięta ręka przesuwa obrys o ponad 100 px w bok — gdyby klatka była
+**Poziome zakotwiczenie** to domyślnie środek bioder, a nie środek obrysu. Przy
+ciosie wyciągnięta ręka przesuwa obrys o ponad 100 px w bok — gdyby klatka była
 centrowana obrysem, postać uciekałaby z klatki i kończyna byłaby ucinana.
 Biodra (pas 45–58% wysokości sylwetki) stoją w miejscu niezależnie od pozy.
 Dolny pas nóg odpada, bo przy kopnięciu z powietrza trafia w wyciągniętą nogę.
+
+**Pozy leżące** (`knockdown`) wymagają dwóch ustawień, bo nie da się w nich
+wskazać bioder ani zmierzyć wzrostu:
+
+- `fit: 'width'` — rozmiar liczony z **szerokości** obrysu, bo „wzrostem”
+  leżącej postaci jest długość ciała. Bez tego obrys 851 px wysokości byłby
+  rozciągnięty do 180 px, co dałoby 370 px szerokości i obcięło postać.
+- `anchor: 'center'` — zakotwiczenie na środku obrysu, bo w leżącej pozie
+  pas bioder wypada na tułowiu i przesuwa postać w bok.
 
 Jeśli chcesz mieć pewność, że kilka osobnych arkuszy da identyczny rozmiar
 postaci, podaj `scale` jawnie (np. `scale: 0.389`) — wtedy obrys nie jest mierzony.
@@ -397,6 +418,10 @@ Wartości zmienisz w [balance.ts](src/game/config/balance.ts).
 Po trafieniu postać wchodzi w **hitstun** (nie może działać). Po zablokowaniu —
 w **blockstun** (krótszy). Blok działa tylko, gdy postać **patrzy w stronę
 atakującego** — atak od tyłu jest nie do obrony.
+
+Po **K.O.** przegrany zostaje w stanie `knockdown` (poza leżąca) do końca rundy —
+wstawanie po nokaucie wyglądałoby, jakby nic się nie stało. Poza `defeat`
+(stojąca) jest używana tylko przy przegranej **na czas**, gdzie nikt nie leżał.
 
 ### Zwrot w stronę przeciwnika
 
