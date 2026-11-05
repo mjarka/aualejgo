@@ -25,7 +25,8 @@ export const ANIM_LAYOUT: Record<AnimName, AnimDef> = {
   block: { row: 8, frames: 1, fps: 6, loop: true },
   hit: { row: 9, frames: 1, fps: 12, loop: false },
   knockdown: { row: 10, frames: 5, fps: 8, loop: false },
-  victory: { row: 11, frames: 6, fps: 8, loop: true },
+  // 12.5 fps = 80 ms na klatke - zwycieska poza ma byc wolna i czytelna
+  victory: { row: 11, frames: 4, fps: 12.5, loop: true },
   defeat: { row: 12, frames: 4, fps: 6, loop: true },
   airAttack: { row: 13, frames: 1, fps: 12, loop: false },
 };
@@ -114,6 +115,7 @@ export const CHARACTER_LIST: readonly CharacterDef[] = [
       heavyAttack: { sheet: '/assets/sprites/c1/punch2.png', columns: 1, rows: 1 },
       hit: { sheet: '/assets/sprites/c1/hit.png', columns: 1, rows: 1 },
       airAttack: { sheet: '/assets/sprites/c1/airkickc1.png', columns: 1, rows: 1 },
+      victory: { sheet: '/assets/sprites/c1/winc1.png', columns: 2, rows: 2 },
     },
     palette: {
       skin: '#d9a06a',
@@ -147,6 +149,7 @@ export const CHARACTER_LIST: readonly CharacterDef[] = [
       heavyAttack: { sheet: '/assets/sprites/c2/punch2.png', columns: 1, rows: 1 },
       hit: { sheet: '/assets/sprites/c2/hit.png', columns: 1, rows: 1 },
       airAttack: { sheet: '/assets/sprites/c2/airkickc2.png', columns: 1, rows: 1 },
+      victory: { sheet: '/assets/sprites/c2/winc2.png', columns: 2, rows: 2 },
     },
     palette: {
       skin: '#e8b98f',

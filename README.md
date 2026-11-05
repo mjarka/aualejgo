@@ -116,7 +116,7 @@ row  7  special  special  special  special  special  special  ─        ─
 row  8  block    ─        ─        ─        ─        ─        ─        ─
 row  9  hit      ─        ─        ─        ─        ─        ─        ─
 row 10  down     down     down     down     down     ─        ─        ─
-row 11  victory  victory  victory  victory  victory  victory  ─        ─
+row 11  victory  victory  victory  victory  ─        ─        ─        ─
 row 12  defeat   defeat   defeat   defeat   ─        ─        ─        ─
 row 13  air      ─        ─        ─        ─        ─        ─        ─
 ```
@@ -145,6 +145,8 @@ Puste komórki po prawej są ignorowane — nie musisz ich wypełniać.
 | `public/assets/sprites/c2/hit.png` | Otrzymanie ciosu przez postać 2 (1 klatka) | ✔ dostarczony |
 | `public/assets/sprites/c1/airkickc1.png` | Cios w powietrzu postaci 1 (1 klatka) | ✔ dostarczony |
 | `public/assets/sprites/c2/airkickc2.png` | Cios w powietrzu postaci 2 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c1/winc1.png` | Poza zwycięstwa postaci 1 (2×2 klatki) | ✔ dostarczony |
+| `public/assets/sprites/c2/winc2.png` | Poza zwycięstwa postaci 2 (2×2 klatki) | ✔ dostarczony |
 | `public/assets/portraits/c1.png` | Portret do ekranu wyboru | ✔ dostarczony |
 | `public/assets/portraits/c2.png` | Portret do ekranu wyboru | ✔ dostarczony |
 | `public/assets/portraits/c1_0..c1_3.png` | Portrety obrażeń postaci 1 (0 = nietknięta) | ✔ dostarczony |
@@ -173,6 +175,7 @@ animationSheets: {
   heavyAttack: { sheet: '/assets/sprites/c1/punch2.png', columns: 1, rows: 1 },
   hit:         { sheet: '/assets/sprites/c1/hit.png', columns: 1, rows: 1 },
   airAttack:   { sheet: '/assets/sprites/c1/airkickc1.png', columns: 1, rows: 1 },
+  victory:     { sheet: '/assets/sprites/c1/winc1.png', columns: 2, rows: 2 },
 },
 ```
 
@@ -180,6 +183,10 @@ Liczba klatek w `ANIM_LAYOUT` musi się zgadzać z liczbą klatek w pliku
 (`columns × rows`), inaczej animacja migałaby pustymi klatkami. Dlatego `jump`,
 `block`, `lightAttack`, `heavyAttack`, `hit` i `airAttack` mają po **1 klatce**
 — są dostarczone jako pojedyncze obrazki.
+
+**Tempo animacji** ustawiasz przez `fps`. Poza zwycięstwa ma być wolna
+i czytelna, więc `victory` ma `fps: 12.5`, czyli **80 ms na klatkę**
+(przy 60 Hz symulacji wychodzi 79.2 ms — różnica to kwantyzacja).
 
 Klatki mogą leżeć w dowolnej siatce (`columns` × `rows`) — loader czyta je
 wierszami (lewo→prawo, potem następny wiersz) i składa w jeden poziomy rząd
