@@ -123,6 +123,39 @@ normalnie.
 Obsługiwany jest też **gamepad** (lewy drążek + przyciski) oraz **wirtualne
 przyciski dotykowe** (przełącznik w prawym górnym rogu).
 
+## Widok mobilny
+
+Na telefonie gra prosi o **tryb poziomy** i wchodzi w **pełny ekran**.
+
+### Pełny ekran i orientacja
+
+Kliknięcie „Walcz" to gest użytkownika, więc tylko tam przeglądarka pozwala
+wejść w pełny ekran i zablokować orientację (`screen.orientation.lock`).
+Dzieje się to **wyłącznie na urządzeniach z gruboziarnistym wskaźnikiem**
+(`pointer: coarse`) — na laptopie z ekranem dotykowym, który ma mysz
+i klawiaturę, pełny ekran byłby niespodzianką.
+
+W trakcie gry przycisk ⛶ w prawym górnym rogu przełącza pełny ekran ręcznie.
+
+> **iOS nie wspiera blokady orientacji.** Safari nie ma `screen.orientation.lock`,
+> więc na iPhonie trzeba obrócić telefon ręcznie — gra wtedy tylko pokazuje
+> podpowiedź. Pełny ekran na iOS działa tylko dla elementu `<video>`.
+
+### Pion blokuje grę
+
+W pionie gra jest niegrywalna: postacie są szersze niż wyższe, a przyciski
+dotykowe zabierają połowę ekranu. Dlatego na urządzeniu dotykowym w orientacji
+pionowej cały ekran zasłania nakładka „Obróć telefon" z przyciskiem pełnego
+ekranu. Na desktopie (nawet w wąskim oknie) nakładka się **nie** pokazuje.
+
+### Mały ekran w poziomie
+
+Poniżej `480px` wysokości UI się ściska: przyciski dotykowe maleją do 44 px
+i tracą podpisy, nagłówki i odstępy się zmniejszają, a portrety na ekranie
+wyboru ograniczają wysokość do `30vh`, żeby zmieścić się bez przewijania.
+
+Kod trybu pełnoekranowego: [fullscreen.ts](src/game/systems/fullscreen.ts).
+
 ## Wybór postaci
 
 Gra zaczyna się od ekranu wyboru, na którym przypisujesz postacie do dwóch
@@ -380,19 +413,28 @@ Osiem efektów + muzyka w `public/assets/audio/`:
 | `ko.mp3` | Nokaut |
 | `jump.mp3` | Skok |
 | `ui.mp3` | Interfejs |
-| `soundtrack.mp3` | Podkład walki (zapętlony) |
+| `soundtrack.mp3` | Podkład muzyczny (zapętlony) |
 Obsługiwane formaty: `.mp3`, `.ogg`, `.wav` — zmień rozszerzenia w
 [audio.ts](src/game/assets/audio.ts) (`SFX_FILES`, `MUSIC_FILE`).
 
 **Brak plików nie jest błędem.** Efekty są wtedy syntezowane proceduralnie przez
 WebAudio, a muzyka po prostu nie gra.
 
-`soundtrack.mp3` leci w pętli od momentu, gdy na ekranie pojawia się „FIGHT!”,
-aż do rozstrzygnięcia meczu. Wyciszenie przyciskiem 🔊 zatrzymuje podkład, a
-odciszenie wznawia go w tym samym miejscu walki.
+`soundtrack.mp3` leci w pętli **przez cały czas działania gry** — na ekranie
+wyboru postaci, w walce i na ekranie wyniku. Nie restartuje się przy wejściu do
+walki ani przy powrocie do menu.
 
-> Przeglądarki blokują dźwięk do pierwszego gestu użytkownika. Audio startuje
-> po kliknięciu „Walcz”.
+Muzyka jest duża (kilka MB), więc **nie opóźnia wejścia do walki** — efekty
+wczytują się razem z grafikami, a podkład dogrywa się w tle
+(`AudioManager.ensureMusic`) i startuje, gdy tylko dotrze.
+
+Wyciszenie przyciskiem 🔊 ścisza cały mikser (`master`), ale **nie zatrzymuje
+odtwarzania** — dzięki temu odciszenie wraca w to samo miejsce utworu, a nie od
+jego początku.
+
+> Przeglądarki blokują dźwięk do pierwszego gestu użytkownika. Podkład startuje
+> przy pierwszym kliknięciu lub naciśnięciu klawisza; jeśli przeglądarka już
+> pozwala na dźwięk, gra od razu.
 
 ---
 
@@ -504,6 +546,7 @@ src/
    │  ├─ input.ts              # Klawiatura, gamepad, dotyk
    │  ├─ bot.ts                # AI bota
    │  ├─ combat.ts             # Rozstrzyganie trafień
+   │  ├─ fullscreen.ts         # Pełny ekran i blokada orientacji poziomej
    │  └─ particles.ts          # Iskry, kurz
    └─ render/
       ├─ draw.ts               # Tło, ulica, postacie, pociski

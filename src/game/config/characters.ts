@@ -1,6 +1,6 @@
-import type { AnimName, AnimDef, CharacterDef, CharacterId } from '../types';
-import { CHARACTER_HEIGHT, MAX_ANIM_FRAMES } from '../constants';
-import { assetUrl } from '../assets/url';
+import type { AnimName, AnimDef, CharacterDef, CharacterId } from "../types";
+import { CHARACTER_HEIGHT, MAX_ANIM_FRAMES } from "../constants";
+import { assetUrl } from "../assets/url";
 
 /**
  * Domyslny uklad siatki spritesheeta.
@@ -62,13 +62,15 @@ export const validateAnimLayout = (
   for (const [name, def] of Object.entries(layout)) {
     const startCol = def.startCol ?? 0;
     if (def.frames < 1) problems.push(`${name}: frames musi byc >= 1`);
-    if (def.frames > MAX_ANIM_FRAMES) problems.push(`${name}: frames > ${MAX_ANIM_FRAMES}`);
+    if (def.frames > MAX_ANIM_FRAMES)
+      problems.push(`${name}: frames > ${MAX_ANIM_FRAMES}`);
     if (startCol + def.frames > columns) {
       problems.push(
         `${name}: klatki ${startCol}..${startCol + def.frames - 1} wychodza poza ${columns} kolumn`,
       );
     }
-    if (def.row < 0 || def.row >= rows) problems.push(`${name}: row poza zakresem arkusza`);
+    if (def.row < 0 || def.row >= rows)
+      problems.push(`${name}: row poza zakresem arkusza`);
     if (def.fps <= 0) problems.push(`${name}: fps musi byc > 0`);
   }
   return problems;
@@ -94,88 +96,176 @@ const baseCharacter = {
 export const CHARACTER_LIST: readonly CharacterDef[] = [
   {
     ...baseCharacter,
-    id: 'c1',
-    name: 'Sheeva',
-    sheet: assetUrl('assets/sprites/c1.png'),
-    portrait: assetUrl('assets/portraits/c1.png'),
+    id: "c1",
+    name: "Larv",
+    sheet: assetUrl("assets/sprites/c1.png"),
+    portrait: assetUrl("assets/portraits/c1.png"),
     damagePortraits: [
-      assetUrl('assets/portraits/c1_0.png'),
-      assetUrl('assets/portraits/c1_1.png'),
-      assetUrl('assets/portraits/c1_2.png'),
-      assetUrl('assets/portraits/c1_3.png'),
+      assetUrl("assets/portraits/c1_0.png"),
+      assetUrl("assets/portraits/c1_1.png"),
+      assetUrl("assets/portraits/c1_2.png"),
+      assetUrl("assets/portraits/c1_3.png"),
     ],
     // cykl chodu dostarczony osobno, klatki ulozone w siatce 2x2
     // grafika jest narysowana w lewo, wiec przy patrzeniu w prawo jest odbijana
-    sheetFacing: 'left',
+    sheetFacing: "left",
     animationSheets: {
-      idle: { sheet: assetUrl('assets/sprites/c1/idle.png'), columns: 2, rows: 2 },
-      walkForward: { sheet: assetUrl('assets/sprites/c1/walk.png'), columns: 2, rows: 2 },
-      walkBack: { sheet: assetUrl('assets/sprites/c1/walk.png'), columns: 2, rows: 2 },
-      jump: { sheet: assetUrl('assets/sprites/c1/jump.png'), columns: 1, rows: 1 },
-      block: { sheet: assetUrl('assets/sprites/c1/block.png'), columns: 1, rows: 1 },
-      lightAttack: { sheet: assetUrl('assets/sprites/c1/punch1.png'), columns: 1, rows: 1 },
-      heavyAttack: { sheet: assetUrl('assets/sprites/c1/punch2.png'), columns: 1, rows: 1 },
-      hit: { sheet: assetUrl('assets/sprites/c1/hit.png'), columns: 1, rows: 1 },
-      airAttack: { sheet: assetUrl('assets/sprites/c1/airkickc1.png'), columns: 1, rows: 1 },
-      special: { sheet: assetUrl('assets/sprites/c1/forcec1.png'), columns: 1, rows: 1 },
+      idle: {
+        sheet: assetUrl("assets/sprites/c1/idle.png"),
+        columns: 2,
+        rows: 2,
+      },
+      walkForward: {
+        sheet: assetUrl("assets/sprites/c1/walk.png"),
+        columns: 2,
+        rows: 2,
+      },
+      walkBack: {
+        sheet: assetUrl("assets/sprites/c1/walk.png"),
+        columns: 2,
+        rows: 2,
+      },
+      jump: {
+        sheet: assetUrl("assets/sprites/c1/jump.png"),
+        columns: 1,
+        rows: 1,
+      },
+      block: {
+        sheet: assetUrl("assets/sprites/c1/block.png"),
+        columns: 1,
+        rows: 1,
+      },
+      lightAttack: {
+        sheet: assetUrl("assets/sprites/c1/punch1.png"),
+        columns: 1,
+        rows: 1,
+      },
+      heavyAttack: {
+        sheet: assetUrl("assets/sprites/c1/punch2.png"),
+        columns: 1,
+        rows: 1,
+      },
+      hit: {
+        sheet: assetUrl("assets/sprites/c1/hit.png"),
+        columns: 1,
+        rows: 1,
+      },
+      airAttack: {
+        sheet: assetUrl("assets/sprites/c1/airkickc1.png"),
+        columns: 1,
+        rows: 1,
+      },
+      special: {
+        sheet: assetUrl("assets/sprites/c1/forcec1.png"),
+        columns: 1,
+        rows: 1,
+      },
       // pozy lezace mierzymy po szerokosci - inaczej postac rozciagnelaby sie
       // na cala klatke, bo jej "wzrost" to dlugosc ciala
       knockdown: {
-        sheet: assetUrl('assets/sprites/c1/beatenc1.png'),
+        sheet: assetUrl("assets/sprites/c1/beatenc1.png"),
         columns: 1,
         rows: 1,
-        fit: 'width',
-        anchor: 'center',
+        fit: "width",
+        anchor: "center",
       },
-      victory: { sheet: assetUrl('assets/sprites/c1/winc1.png'), columns: 2, rows: 2 },
+      victory: {
+        sheet: assetUrl("assets/sprites/c1/winc1.png"),
+        columns: 2,
+        rows: 2,
+      },
     },
     palette: {
-      skin: '#d9a06a',
-      primary: '#c0392b',
-      secondary: '#6d1f16',
-      outline: '#1a0d0d',
+      skin: "#d9a06a",
+      primary: "#c0392b",
+      secondary: "#6d1f16",
+      outline: "#1a0d0d",
     },
   },
   {
     ...baseCharacter,
-    id: 'c2',
-    name: 'Jade',
-    sheet: assetUrl('assets/sprites/c2.png'),
-    portrait: assetUrl('assets/portraits/c2.png'),
+    id: "c2",
+    name: "Nos",
+    sheet: assetUrl("assets/sprites/c2.png"),
+    portrait: assetUrl("assets/portraits/c2.png"),
     damagePortraits: [
-      assetUrl('assets/portraits/c2_0.png'),
-      assetUrl('assets/portraits/c2_1.png'),
-      assetUrl('assets/portraits/c2_2.png'),
-      assetUrl('assets/portraits/c2_3.png'),
+      assetUrl("assets/portraits/c2_0.png"),
+      assetUrl("assets/portraits/c2_1.png"),
+      assetUrl("assets/portraits/c2_2.png"),
+      assetUrl("assets/portraits/c2_3.png"),
     ],
     // cykl chodu dostarczony osobno, klatki ulozone w siatce 2x2
     // grafika jest narysowana w lewo, wiec przy patrzeniu w prawo jest odbijana
-    sheetFacing: 'left',
+    sheetFacing: "left",
     animationSheets: {
-      idle: { sheet: assetUrl('assets/sprites/c2/idle.png'), columns: 2, rows: 2 },
-      walkForward: { sheet: assetUrl('assets/sprites/c2/walk.png'), columns: 2, rows: 2 },
-      walkBack: { sheet: assetUrl('assets/sprites/c2/walk.png'), columns: 2, rows: 2 },
-      jump: { sheet: assetUrl('assets/sprites/c2/jump.png'), columns: 1, rows: 1 },
-      block: { sheet: assetUrl('assets/sprites/c2/block.png'), columns: 1, rows: 1 },
-      lightAttack: { sheet: assetUrl('assets/sprites/c2/punch1.png'), columns: 1, rows: 1 },
-      heavyAttack: { sheet: assetUrl('assets/sprites/c2/punch2.png'), columns: 1, rows: 1 },
-      hit: { sheet: assetUrl('assets/sprites/c2/hit.png'), columns: 1, rows: 1 },
-      airAttack: { sheet: assetUrl('assets/sprites/c2/airkickc2.png'), columns: 1, rows: 1 },
-      special: { sheet: assetUrl('assets/sprites/c2/forcec2.png'), columns: 1, rows: 1 },
-      knockdown: {
-        sheet: assetUrl('assets/sprites/c2/beatenc2.png'),
+      idle: {
+        sheet: assetUrl("assets/sprites/c2/idle.png"),
+        columns: 2,
+        rows: 2,
+      },
+      walkForward: {
+        sheet: assetUrl("assets/sprites/c2/walk.png"),
+        columns: 2,
+        rows: 2,
+      },
+      walkBack: {
+        sheet: assetUrl("assets/sprites/c2/walk.png"),
+        columns: 2,
+        rows: 2,
+      },
+      jump: {
+        sheet: assetUrl("assets/sprites/c2/jump.png"),
         columns: 1,
         rows: 1,
-        fit: 'width',
-        anchor: 'center',
       },
-      victory: { sheet: assetUrl('assets/sprites/c2/winc2.png'), columns: 2, rows: 2 },
+      block: {
+        sheet: assetUrl("assets/sprites/c2/block.png"),
+        columns: 1,
+        rows: 1,
+      },
+      lightAttack: {
+        sheet: assetUrl("assets/sprites/c2/punch1.png"),
+        columns: 1,
+        rows: 1,
+      },
+      heavyAttack: {
+        sheet: assetUrl("assets/sprites/c2/punch2.png"),
+        columns: 1,
+        rows: 1,
+      },
+      hit: {
+        sheet: assetUrl("assets/sprites/c2/hit.png"),
+        columns: 1,
+        rows: 1,
+      },
+      airAttack: {
+        sheet: assetUrl("assets/sprites/c2/airkickc2.png"),
+        columns: 1,
+        rows: 1,
+      },
+      special: {
+        sheet: assetUrl("assets/sprites/c2/forcec2.png"),
+        columns: 1,
+        rows: 1,
+      },
+      knockdown: {
+        sheet: assetUrl("assets/sprites/c2/beatenc2.png"),
+        columns: 1,
+        rows: 1,
+        fit: "width",
+        anchor: "center",
+      },
+      victory: {
+        sheet: assetUrl("assets/sprites/c2/winc2.png"),
+        columns: 2,
+        rows: 2,
+      },
     },
     palette: {
-      skin: '#e8b98f',
-      primary: '#2e9e5b',
-      secondary: '#175c33',
-      outline: '#0d1a12',
+      skin: "#e8b98f",
+      primary: "#2e9e5b",
+      secondary: "#175c33",
+      outline: "#0d1a12",
     },
   },
 ];
