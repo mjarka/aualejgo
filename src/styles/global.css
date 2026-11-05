@@ -661,11 +661,11 @@ canvas.game-canvas {
     font-size: 13px;
   }
   .select-screen {
-    padding: 8px 10px 12px;
-    gap: 8px;
+    padding: 4px 10px 6px;
+    gap: 6px;
   }
   .select-header h1 {
-    font-size: 20px;
+    font-size: 18px;
     letter-spacing: 3px;
   }
   .select-hint {
@@ -673,16 +673,71 @@ canvas.game-canvas {
   }
   .portrait-row {
     grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    gap: 6px;
+  }
+  .portrait-card {
+    padding: 4px 6px 6px;
   }
   .portrait-canvas {
-    max-height: 30vh;
+    max-height: 20vh;
     width: auto;
     margin: 0 auto;
+  }
+  .portrait-name {
+    font-size: 14px;
+    letter-spacing: 2px;
+  }
+  .portrait-role {
+    font-size: 10px;
+    letter-spacing: 1px;
   }
   .select-footer {
     flex-direction: row;
     align-items: center;
-    padding: 8px;
+    padding: 6px 8px;
+  }
+  .select-footer .field {
+    flex: 1 1 auto;
+  }
+  .select-footer .field-label {
+    font-size: 11px;
+  }
+  .select-footer .seg button {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+  .select-actions .btn {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  .controls-details {
+    font-size: 11px;
+  }
+}
+
+/* Telefony z niskim ekranem w poziomie (np. 740x360) - zostaje wowczas tak malo
+   miejsca, ze ekran wyboru nie miesci sie bez przewijania. Chowamy rozwijane
+   sterowanie i sciskamy kafelki, zeby calosc byla widoczna od razu. */
+@media (max-height: 380px) and (orientation: landscape) {
+  .controls-details {
+    display: none;
+  }
+  .slot-tab {
+    padding: 6px 10px;
+  }
+  .slot-tab .slot-value {
+    font-size: 16px;
+  }
+  .portrait-canvas {
+    max-height: 17vh;
+  }
+  .select-footer {
+    padding: 4px 6px;
+  }
+  .select-footer .seg button {
+    padding: 5px 6px;
+  }
+  .select-actions .btn {
+    padding: 5px 8px;
   }
 }
