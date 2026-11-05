@@ -66,10 +66,16 @@ proceduralnymi odpowiednikami. Gdy wrzucisz własne, zostaną użyte automatyczn
 | `S` | Kucanie |
 | `J` | Cios lekki |
 | `K` | Cios ciężki |
+| `J` / `K` **w powietrzu** | Cios w powietrzu (air kick) |
 | `L` | Atak specjalny (pocisk, koszt 25 energii) |
 | `Spacja` / `Shift` | Blok |
 | `ESC` | Pauza |
 | `Enter` | Wznowienie (w pauzie) |
+
+**Cios w powietrzu** — w trakcie skoku `J` albo `K` zamienia lot na kopnięcie
+(8 obrażeń). Hitbox schodzi nisko, więc trafia stojącego przeciwnika niezależnie
+od wysokości lotu. Po zakończeniu animacji postać wraca do lotu i ląduje
+normalnie.
 
 Obsługiwany jest też **gamepad** (lewy drążek + przyciski) oraz **wirtualne
 przyciski dotykowe** (przełącznik w prawym górnym rogu).

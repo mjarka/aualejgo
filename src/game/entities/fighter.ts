@@ -425,8 +425,15 @@ export class Fighter {
     } else {
       this.attack = null;
       this.attackKind = null;
-      this.state = 'idle';
-      this.playAnim('idle', true);
+      // Atak w powietrzu konczy sie czesto przed ladowaniem - wtedy wracamy do
+      // animacji skoku, a nie do bezruchu, bo postac nadal jest w locie.
+      if (this.onGround) {
+        this.state = 'idle';
+        this.playAnim('idle', true);
+      } else {
+        this.state = 'jump';
+        this.playAnim('jump', true);
+      }
       return;
     }
 

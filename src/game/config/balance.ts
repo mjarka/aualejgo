@@ -54,8 +54,15 @@ export const ATTACKS: Record<AttackKind, AttackDef> = {
     active: 6,
     recovery: 6,
     damage: 8,
-    // kopniecie z powietrza siega nizej i dalej niz cios z ziemi
-    hitbox: { x: 20, y: -110, w: 62, h: 48 },
+    /**
+     * Kopniecie z powietrza musi siegac w dol, do stojacego przeciwnika.
+     *
+     * W locie stopy sa nawet 133 px nad ziemia (szczyt skoku), a przeciwnik
+     * ma 180 px wzrostu - hitbox zaczepiony wysoko minalby go zawsze.
+     * Dlatego pudelko jest wysokie i schodzi ponizej stop: przy szczycie skoku
+     * lapie jeszcze glowe i tors, a przy ladowaniu cala sylwetke.
+     */
+    hitbox: { x: 20, y: -120, w: 62, h: 90 },
     hitstun: 16,
     blockstun: 10,
     knockback: { x: 3.4, y: -1.6 },
