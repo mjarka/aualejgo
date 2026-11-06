@@ -131,41 +131,6 @@ canvas.game-canvas {
   background: #98374c;
 }
 
-.field {
-  width: 100%;
-}
-
-.field-label {
-  display: block;
-  margin-bottom: 6px;
-  font-size: 11px;
-  letter-spacing: 2px;
-  color: var(--muted);
-  text-transform: uppercase;
-}
-
-.seg {
-  display: flex;
-  gap: 6px;
-}
-
-.seg button {
-  flex: 1;
-  padding: 9px 6px;
-  font-size: 12px;
-  letter-spacing: 1px;
-  color: var(--muted);
-  background: #120d1e;
-  border: 2px solid #2f2545;
-}
-
-.seg button[aria-pressed='true'] {
-  color: #0d0a14;
-  background: var(--accent);
-  border-color: #fff3c9;
-  font-weight: bold;
-}
-
 /* ------------------------------------------------------- wybor postaci */
 
 .overlay.select-overlay {
@@ -202,41 +167,6 @@ canvas.game-canvas {
   font-size: 12px;
   letter-spacing: 1px;
   color: var(--muted);
-}
-
-.slot-tabs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.slot-tab {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  padding: 10px 14px;
-  text-align: left;
-  background: #120d1e;
-  border: 2px solid #2f2545;
-  color: var(--muted);
-}
-
-.slot-tab.active {
-  border-color: var(--accent);
-  background: #241a33;
-  color: var(--accent);
-}
-
-.slot-tab .slot-label {
-  font-size: 11px;
-  letter-spacing: 3px;
-  opacity: 0.8;
-}
-
-.slot-tab .slot-value {
-  font-size: 19px;
-  font-weight: bold;
-  letter-spacing: 1px;
 }
 
 .portrait-row {
@@ -287,32 +217,26 @@ canvas.game-canvas {
   color: var(--accent);
 }
 
-.portrait-role {
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
 .select-footer {
   display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  align-items: flex-end;
-  justify-content: space-between;
+  gap: 10px;
+  align-items: stretch;
   padding: 12px;
   background: #100b1a;
   border: 2px solid #2f2545;
 }
 
-.select-footer .field {
-  flex: 1 1 240px;
+/* "Walcz" to jedyna wazna akcja na tym ekranie - zajmuje cala szerokosc poza
+   miejscem na przelacznik dzwieku. */
+.btn-fight {
+  flex: 1;
+  padding: 18px 24px;
+  font-size: 24px;
+  letter-spacing: 6px;
 }
 
-.select-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+.btn-sound {
+  flex: 0 0 auto;
 }
 
 .controls-details {
@@ -606,10 +530,6 @@ canvas.game-canvas {
   }
   .select-footer {
     flex-direction: column;
-    align-items: stretch;
-  }
-  .select-actions .btn {
-    flex: 1;
   }
 }
 
@@ -661,6 +581,7 @@ canvas.game-canvas {
     font-size: 13px;
   }
   .select-screen {
+    height: 100%;
     padding: 4px 10px 6px;
     gap: 6px;
   }
@@ -671,43 +592,41 @@ canvas.game-canvas {
   .select-hint {
     display: none;
   }
+  /* Portrety maja wypelnic cala wolna wysokosc ekranu. Karta dopasowuje
+     szerokosc do obrazu (`auto`), inaczej rozciagalaby sie na cala kolumne
+     i portret zostawalby maly w ogromnej pustej ramce. */
   .portrait-row {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
+    flex: 1;
+    min-height: 0;
+    grid-template-columns: repeat(2, auto);
+    justify-content: center;
+    gap: 8px;
   }
   .portrait-card {
+    min-height: 0;
     padding: 4px 6px 6px;
   }
   .portrait-canvas {
-    max-height: 20vh;
+    flex: 1;
+    min-height: 0;
     width: auto;
+    max-height: none;
     margin: 0 auto;
   }
   .portrait-name {
     font-size: 14px;
     letter-spacing: 2px;
   }
-  .portrait-role {
-    font-size: 10px;
-    letter-spacing: 1px;
-  }
   .select-footer {
-    flex-direction: row;
-    align-items: center;
     padding: 6px 8px;
   }
-  .select-footer .field {
-    flex: 1 1 auto;
+  .btn-fight {
+    padding: 10px 16px;
+    font-size: 18px;
+    letter-spacing: 4px;
   }
-  .select-footer .field-label {
-    font-size: 11px;
-  }
-  .select-footer .seg button {
-    padding: 6px 8px;
-    font-size: 12px;
-  }
-  .select-actions .btn {
-    padding: 6px 10px;
+  .btn-sound {
+    padding: 8px 12px;
     font-size: 12px;
   }
   .controls-details {
@@ -722,22 +641,17 @@ canvas.game-canvas {
   .controls-details {
     display: none;
   }
-  .slot-tab {
-    padding: 6px 10px;
-  }
-  .slot-tab .slot-value {
-    font-size: 16px;
-  }
-  .portrait-canvas {
-    max-height: 17vh;
-  }
   .select-footer {
     padding: 4px 6px;
   }
-  .select-footer .seg button {
-    padding: 5px 6px;
+  .btn-fight {
+    padding: 8px 12px;
+    font-size: 16px;
+    letter-spacing: 3px;
   }
-  .select-actions .btn {
-    padding: 5px 8px;
+  .btn-sound {
+    padding: 6px 10px;
+    font-size: 11px;
   }
 }
+

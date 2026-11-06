@@ -158,13 +158,25 @@ Kod trybu pełnoekranowego: [fullscreen.ts](src/game/systems/fullscreen.ts).
 
 ## Wybór postaci
 
-Gra zaczyna się od ekranu wyboru, na którym przypisujesz postacie do dwóch
-slotów — **GRACZ** i **BOT** — oraz wybierasz poziom trudności.
+Gra zaczyna się od ekranu wyboru, na którym **klikasz postać, którą chcesz grać**.
 
-- Kliknij zakładkę slotu, aby wybrać, któremu przypisujesz postać.
-- Kliknij portret, aby przypisać go do aktywnego slotu.
-- Ten sam portret nie może trafić do obu slotów — druga postać przełączy się
-  automatycznie na wolną.
+- Kliknięcie portretu wybiera Twoją postać (złota ramka).
+- **Przeciwnika wybiera gra** — bot zawsze dostaje drugą postać, więc nigdy nie
+  grasz sam ze sobą.
+- Pod portretami jest tylko nazwa postaci; brak podpisów ról i zakładek slotów,
+  bo przy dwóch postaciach wybór gracza rozstrzyga oba sloty.
+- Pod portretami: duży przycisk **Walcz** (zajmuje całą szerokość ekranu poza
+  przełącznikiem dźwięku).
+
+### Poziom trudności
+
+Ekran startowy **nie ma wyboru poziomu** — gramy zawsze na `hard` („Trudny"),
+ustawionym w [`DEFAULT_DIFFICULTY`](src/game/config/balance.ts). Etykieta
+poziomu nadal pokazuje się w pauzie i na ekranie wyniku.
+
+Aby zmienić poziom, ustaw `DEFAULT_DIFFICULTY` na `'easy'` albo `'normal'` —
+parametry wszystkich trzech poziomów (`reaction`, `defense`, `aggression`,
+`comboChance`) nadal są dostępne w `DIFFICULTY`.
 
 ---
 

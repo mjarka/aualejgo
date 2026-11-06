@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { ReactElement } from 'react';
 import type { CharacterDef, CharacterId } from '../game/types';
 import type { DifficultyKey } from '../game/config/balance';
-import { DIFFICULTY } from '../game/config/balance';
+import { DEFAULT_DIFFICULTY } from '../game/config/balance';
 import { CONTROL_HINTS } from '../game/systems/input';
 import { imageSize } from '../game/core/image';
 
@@ -17,26 +17,21 @@ interface CharacterSelectProps {
   /** Portrety wczytane przez loader (klucz = id postaci). */
   portraits: Record<string, CanvasImageSource>;
   onConfirm: (result: SelectResult) => void;
-  onBack: () => void;
   muted: boolean;
   onToggleMute: () => void;
 }
-
-type Slot = 'player' | 'bot';
 
 /** Rysuje portret w pixel-artowym stylu, zachowujac ostre piksele. */
 const PortraitCanvas = ({
   image,
   highlight,
   label,
-  sublabel,
   onClick,
   disabled,
 }: {
   image: CanvasImageSource | undefined;
   highlight: boolean;
   label: string;
-  sublabel: string;
   onClick: () => void;
   disabled: boolean;
 }): ReactElement => {
@@ -70,99 +65,47 @@ const PortraitCanvas = ({
     >
       <canvas ref={ref} width={200} height={300} className="portrait-canvas" />
       <span className="portrait-name">{label}</span>
-      <span className="portrait-role">{sublabel}</span>
     </button>
   );
 };
 
 /**
- * Pierwszy ekran gry - wybor postaci gracza i bota oraz poziomu trudnosci.
+ * Pierwszy ekran gry - wybor postaci gracza.
  *
- * Ten sam portret nie moze byc wybrany jednoczesnie dla gracza i bota,
- * dlatego druga postac jest automatycznie przelaczana na wolna.
+ * Bot dostaje druga postac, wiec przy dwoch postaciach wybor gracza wybiera
+ * oba sloty naraz i nie trzeba pytac osobno o kazdego z nich.
  */
 export const CharacterSelect = ({
   characters,
   portraits,
   onConfirm,
-  onBack,
   muted,
   onToggleMute,
 }: CharacterSelectProps): ReactElement => {
   const [playerId, setPlayerId] = useState<CharacterId>(characters[0]?.id ?? 'c1');
   const [botId, setBotId] = useState<CharacterId>(characters[1]?.id ?? 'c2');
-  const [difficulty, setDifficulty] = useState<DifficultyKey>('normal');
-  const [activeSlot, setActiveSlot] = useState<Slot>('player');
 
+  /** Wybor gracza ustawia tez bota na druga postac - nigdy nie gra sam ze soba. */
   const selectCharacter = (id: CharacterId): void => {
-    if (activeSlot === 'player') {
-      setPlayerId(id);
-      if (id === botId) {
-        const other = characters.find((c) => c.id !== id);
-        if (other) setBotId(other.id);
-      }
-    } else {
-      setBotId(id);
-      if (id === playerId) {
-        const other = characters.find((c) => c.id !== id);
-        if (other) setPlayerId(other.id);
-      }
-    }
+    setPlayerId(id);
+    const other = characters.find((c) => c.id !== id);
+    if (other) setBotId(other.id);
   };
-
-  const playerChar = characters.find((c) => c.id === playerId);
-  const botChar = characters.find((c) => c.id === botId);
 
   return (
     <div className="select-screen">
       <header className="select-header">
-        <h1>WYBIERZ POSTACIE</h1>
-        <p className="select-hint">
-          Kliknij postac, aby przypisac ja do aktywnego slotu. Przelaczaj sloty przyciskami
-          poniżej.
-        </p>
+        <h1>WYBIERZ POSTAC</h1>
+        <p className="select-hint">Kliknij postac, ktora chcesz grac. Przeciwnika wybiera gra.</p>
       </header>
-
-      <div className="slot-tabs" role="group" aria-label="Aktywny slot">
-        <button
-          type="button"
-          className={`slot-tab ${activeSlot === 'player' ? 'active' : ''}`}
-          aria-pressed={activeSlot === 'player'}
-          onClick={() => setActiveSlot('player')}
-        >
-          <span className="slot-label">GRACZ</span>
-          <span className="slot-value">{playerChar?.name ?? '—'}</span>
-        </button>
-        <button
-          type="button"
-          className={`slot-tab ${activeSlot === 'bot' ? 'active' : ''}`}
-          aria-pressed={activeSlot === 'bot'}
-          onClick={() => setActiveSlot('bot')}
-        >
-          <span className="slot-label">BOT</span>
-          <span className="slot-value">{botChar?.name ?? '—'}</span>
-        </button>
-      </div>
 
       <div className="portrait-row">
         {characters.map((c) => (
           <PortraitCanvas
             key={c.id}
             image={portraits[c.id]}
-            highlight={
-              (activeSlot === 'player' && c.id === playerId) ||
-              (activeSlot === 'bot' && c.id === botId)
-            }
+            highlight={c.id === playerId}
             label={c.name}
-            sublabel={
-              c.id === playerId && c.id === botId
-                ? 'gracz + bot'
-                : c.id === playerId
-                  ? 'gracz'
-                  : c.id === botId
-                    ? 'bot'
-                    : 'wolna'
-            }
             onClick={() => selectCharacter(c.id)}
             disabled={false}
           />
@@ -170,37 +113,18 @@ export const CharacterSelect = ({
       </div>
 
       <div className="select-footer">
-        <div className="field">
-          <span className="field-label">Poziom trudnosci</span>
-          <div className="seg" role="group" aria-label="Poziom trudnosci">
-            {(Object.keys(DIFFICULTY) as DifficultyKey[]).map((key) => (
-              <button
-                key={key}
-                type="button"
-                aria-pressed={difficulty === key}
-                onClick={() => setDifficulty(key)}
-              >
-                {DIFFICULTY[key].label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="select-actions">
-          <button
-            type="button"
-            className="btn primary"
-            onClick={() => onConfirm({ player: playerId, bot: botId, difficulty })}
-          >
-            Walcz
-          </button>
-          <button type="button" className="btn" onClick={onToggleMute}>
-            {muted ? 'Dzwiek: off' : 'Dzwiek: on'}
-          </button>
-          <button type="button" className="btn" onClick={onBack}>
-            Wstecz
-          </button>
-        </div>
+        <button
+          type="button"
+          className="btn primary btn-fight"
+          onClick={() =>
+            onConfirm({ player: playerId, bot: botId, difficulty: DEFAULT_DIFFICULTY })
+          }
+        >
+          Walcz
+        </button>
+        <button type="button" className="btn btn-sound" onClick={onToggleMute}>
+          {muted ? 'Dzwiek: off' : 'Dzwiek: on'}
+        </button>
       </div>
 
       <details className="controls-details">

@@ -109,4 +109,12 @@ export const DIFFICULTY = {
   },
 } as const;
 
+/**
+ * Poziom trudnosci uzywany przez gre.
+ *
+ * Ekran startowy nie ma wyboru poziomu - gramy zawsze na tym samym. Zmien
+ * tutaj, jesli chcesz inny domyslny poziom (klucz z `DIFFICULTY`).
+ */
+export const DEFAULT_DIFFICULTY: DifficultyKey = 'hard';
+
 export type DifficultyKey = keyof typeof DIFFICULTY;

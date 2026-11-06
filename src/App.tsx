@@ -11,7 +11,7 @@ import { ensureGameFont } from './game/render/font';
 import { loadAssets, type LoadedAssets } from './game/assets/loader';
 import { CHARACTER_LIST } from './game/config/characters';
 import { STAGE } from './game/config/stages';
-import { DIFFICULTY } from './game/config/balance';
+import { DEFAULT_DIFFICULTY, DIFFICULTY } from './game/config/balance';
 import {
   enterGameFullscreen,
   isCoarsePointer,
@@ -56,7 +56,7 @@ const App = (): ReactElement => {
   const [selection, setSelection] = useState<SelectResult>({
     player: 'c1',
     bot: 'c2',
-    difficulty: 'normal',
+    difficulty: DEFAULT_DIFFICULTY,
   });
   const [snapshot, setSnapshot] = useState<GameSnapshot>(initialSnapshot);
   const [paused, setPaused] = useState(false);
@@ -385,7 +385,6 @@ const App = (): ReactElement => {
               characters={CHARACTER_LIST}
               portraits={portraits}
               onConfirm={(result) => void startMatch(result)}
-              onBack={() => setScreen('select')}
               muted={muted}
               onToggleMute={toggleMute}
             />
