@@ -54,7 +54,7 @@ export const drawStage = (r: Renderer, stage: LoadedStage, cameraX: number): voi
 /**
  * Wysokosc ulicy na ekranie, wyliczona z proporcji grafiki.
  *
- * Dzieki temu podmiana road.jpg na inny plik nie znieksztalci ulicy.
+ * Dzieki temu podmiana road.webp na inny plik nie znieksztalci ulicy.
  */
 export const roadScreenHeight = (stage: LoadedStage): number => {
   if (!stage.roadWidth || !stage.roadHeight) return LOGICAL_H / 2;

@@ -82,7 +82,7 @@ przepisuje**. Dlatego każda ścieżka przechodzi przez
 [assetUrl()](src/game/assets/url.ts), które dokleja `import.meta.env.BASE_URL`:
 
 ```ts
-sheet: assetUrl('assets/sprites/c1/idle.png'),
+sheet: assetUrl('assets/sprites/c1/idle.webp'),
 ```
 
 Dodając nowy asset, użyj `assetUrl(...)` zamiast zapisywać `/assets/...` na
@@ -215,34 +215,34 @@ Puste komórki po prawej są ignorowane — nie musisz ich wypełniać.
 
 | Plik | Rola | Status |
 |---|---|---|
-| `public/assets/sprites/c1.png` | Spritesheet postaci 1 (Sheeva) | do dostarczenia |
-| `public/assets/sprites/c2.png` | Spritesheet postaci 2 (Jade) | do dostarczenia |
-| `public/assets/sprites/c1/walk.png` | Cykl chodu postaci 1 (2×2 klatki) | ✔ dostarczony |
-| `public/assets/sprites/c2/walk.png` | Cykl chodu postaci 2 (2×2 klatki) | ✔ dostarczony |
-| `public/assets/sprites/c1/idle.png` | Bezruch postaci 1 (2×2 klatki) | ✔ dostarczony |
-| `public/assets/sprites/c2/idle.png` | Bezruch postaci 2 (2×2 klatki) | ✔ dostarczony |
-| `public/assets/sprites/c1/jump.png` | Skok postaci 1 (1 klatka) | ✔ dostarczony |
-| `public/assets/sprites/c2/jump.png` | Skok postaci 2 (1 klatka) | ✔ dostarczony |
-| `public/assets/sprites/c1/block.png` | Blok postaci 1 (1 klatka) | ✔ dostarczony |
-| `public/assets/sprites/c2/block.png` | Blok postaci 2 (1 klatka) | ✔ dostarczony |
-| `public/assets/sprites/c1/punch1.png` | Lekki cios postaci 1 (1 klatka) | ✔ dostarczony |
-| `public/assets/sprites/c2/punch1.png` | Lekki cios postaci 2 (1 klatka) | ✔ dostarczony |
-| `public/assets/sprites/c1/punch2.png` | Ciężki cios postaci 1 (1 klatka) | ✔ dostarczony |
-| `public/assets/sprites/c2/punch2.png` | Ciężki cios postaci 2 (1 klatka) | ✔ dostarczony |
-| `public/assets/sprites/c1/hit.png` | Otrzymanie ciosu przez postać 1 (1 klatka) | ✔ dostarczony |
-| `public/assets/sprites/c2/hit.png` | Otrzymanie ciosu przez postać 2 (1 klatka) | ✔ dostarczony |
-| `public/assets/sprites/c1/airkickc1.png` | Cios w powietrzu postaci 1 (1 klatka) | ✔ dostarczony |
-| `public/assets/sprites/c2/airkickc2.png` | Cios w powietrzu postaci 2 (1 klatka) | ✔ dostarczony |
-| `public/assets/sprites/c1/winc1.png` | Poza zwycięstwa postaci 1 (2×2 klatki) | ✔ dostarczony |
-| `public/assets/sprites/c2/winc2.png` | Poza zwycięstwa postaci 2 (2×2 klatki) | ✔ dostarczony |
-| `public/assets/sprites/c1/forcec1.png` | Atak specjalny postaci 1 (1 klatka) | ✔ dostarczony |
-| `public/assets/sprites/c2/forcec2.png` | Atak specjalny postaci 2 (1 klatka) | ✔ dostarczony |
-| `public/assets/sprites/c1/beatenc1.png` | Poza leżąca postaci 1 (1 klatka) | ✔ dostarczony |
-| `public/assets/sprites/c2/beatenc2.png` | Poza leżąca postaci 2 (1 klatka) | ✔ dostarczony |
-| `public/assets/portraits/c1.png` | Portret do ekranu wyboru | ✔ dostarczony |
-| `public/assets/portraits/c2.png` | Portret do ekranu wyboru | ✔ dostarczony |
-| `public/assets/portraits/c1_0..c1_3.png` | Portrety obrażeń postaci 1 (0 = nietknięta) | ✔ dostarczony |
-| `public/assets/portraits/c2_0..c2_3.png` | Portrety obrażeń postaci 2 (0 = nietknięta) | ✔ dostarczony |
+| `public/assets/sprites/c1.webp` | Spritesheet postaci 1 (Sheeva) | do dostarczenia |
+| `public/assets/sprites/c2.webp` | Spritesheet postaci 2 (Jade) | do dostarczenia |
+| `public/assets/sprites/c1/walk.webp` | Cykl chodu postaci 1 (2×2 klatki) | ✔ dostarczony |
+| `public/assets/sprites/c2/walk.webp` | Cykl chodu postaci 2 (2×2 klatki) | ✔ dostarczony |
+| `public/assets/sprites/c1/idle.webp` | Bezruch postaci 1 (2×2 klatki) | ✔ dostarczony |
+| `public/assets/sprites/c2/idle.webp` | Bezruch postaci 2 (2×2 klatki) | ✔ dostarczony |
+| `public/assets/sprites/c1/jump.webp` | Skok postaci 1 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c2/jump.webp` | Skok postaci 2 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c1/block.webp` | Blok postaci 1 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c2/block.webp` | Blok postaci 2 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c1/punch1.webp` | Lekki cios postaci 1 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c2/punch1.webp` | Lekki cios postaci 2 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c1/punch2.webp` | Ciężki cios postaci 1 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c2/punch2.webp` | Ciężki cios postaci 2 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c1/hit.webp` | Otrzymanie ciosu przez postać 1 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c2/hit.webp` | Otrzymanie ciosu przez postać 2 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c1/airkickc1.webp` | Cios w powietrzu postaci 1 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c2/airkickc2.webp` | Cios w powietrzu postaci 2 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c1/winc1.webp` | Poza zwycięstwa postaci 1 (2×2 klatki) | ✔ dostarczony |
+| `public/assets/sprites/c2/winc2.webp` | Poza zwycięstwa postaci 2 (2×2 klatki) | ✔ dostarczony |
+| `public/assets/sprites/c1/forcec1.webp` | Atak specjalny postaci 1 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c2/forcec2.webp` | Atak specjalny postaci 2 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c1/beatenc1.webp` | Poza leżąca postaci 1 (1 klatka) | ✔ dostarczony |
+| `public/assets/sprites/c2/beatenc2.webp` | Poza leżąca postaci 2 (1 klatka) | ✔ dostarczony |
+| `public/assets/portraits/c1.webp` | Portret do ekranu wyboru | ✔ dostarczony |
+| `public/assets/portraits/c2.webp` | Portret do ekranu wyboru | ✔ dostarczony |
+| `public/assets/portraits/c1_0..c1_3.webp` | Portrety obrażeń postaci 1 (0 = nietknięta) | ✔ dostarczony |
+| `public/assets/portraits/c2_0..c2_3.webp` | Portrety obrażeń postaci 2 (0 = nietknięta) | ✔ dostarczony |
 
 Pełny spritesheet: **1792×2688 px** (8 × 224 szerokości, 14 × 192 wysokości).
 
@@ -258,19 +258,19 @@ Wystarczy wpis w `animationSheets` w
 
 ```ts
 animationSheets: {
-  idle:        { sheet: assetUrl('assets/sprites/c1/idle.png'), columns: 2, rows: 2 },
-  walkForward: { sheet: assetUrl('assets/sprites/c1/walk.png'), columns: 2, rows: 2 },
-  walkBack:    { sheet: assetUrl('assets/sprites/c1/walk.png'), columns: 2, rows: 2 },
-  jump:        { sheet: assetUrl('assets/sprites/c1/jump.png'), columns: 1, rows: 1 },
-  block:       { sheet: assetUrl('assets/sprites/c1/block.png'), columns: 1, rows: 1 },
-  lightAttack: { sheet: assetUrl('assets/sprites/c1/punch1.png'), columns: 1, rows: 1 },
-  heavyAttack: { sheet: assetUrl('assets/sprites/c1/punch2.png'), columns: 1, rows: 1 },
-  hit:         { sheet: assetUrl('assets/sprites/c1/hit.png'), columns: 1, rows: 1 },
-  airAttack:   { sheet: assetUrl('assets/sprites/c1/airkickc1.png'), columns: 1, rows: 1 },
-  special:     { sheet: assetUrl('assets/sprites/c1/forcec1.png'), columns: 1, rows: 1 },
-  victory:     { sheet: assetUrl('assets/sprites/c1/winc1.png'), columns: 2, rows: 2 },
+  idle:        { sheet: assetUrl('assets/sprites/c1/idle.webp'), columns: 2, rows: 2 },
+  walkForward: { sheet: assetUrl('assets/sprites/c1/walk.webp'), columns: 2, rows: 2 },
+  walkBack:    { sheet: assetUrl('assets/sprites/c1/walk.webp'), columns: 2, rows: 2 },
+  jump:        { sheet: assetUrl('assets/sprites/c1/jump.webp'), columns: 1, rows: 1 },
+  block:       { sheet: assetUrl('assets/sprites/c1/block.webp'), columns: 1, rows: 1 },
+  lightAttack: { sheet: assetUrl('assets/sprites/c1/punch1.webp'), columns: 1, rows: 1 },
+  heavyAttack: { sheet: assetUrl('assets/sprites/c1/punch2.webp'), columns: 1, rows: 1 },
+  hit:         { sheet: assetUrl('assets/sprites/c1/hit.webp'), columns: 1, rows: 1 },
+  airAttack:   { sheet: assetUrl('assets/sprites/c1/airkickc1.webp'), columns: 1, rows: 1 },
+  special:     { sheet: assetUrl('assets/sprites/c1/forcec1.webp'), columns: 1, rows: 1 },
+  victory:     { sheet: assetUrl('assets/sprites/c1/winc1.webp'), columns: 2, rows: 2 },
   knockdown:   {
-    sheet: assetUrl('assets/sprites/c1/beatenc1.png'),
+    sheet: assetUrl('assets/sprites/c1/beatenc1.webp'),
     columns: 1,
     rows: 1,
     fit: 'width',
@@ -348,10 +348,10 @@ jak grafiki). Wraz z otrzymywanymi obrażeniami portret się zmienia — lista
 
 ```ts
 damagePortraits: [
-  assetUrl('assets/portraits/c1_0.png'),  // pełne zdrowie
-  assetUrl('assets/portraits/c1_1.png'),
-  assetUrl('assets/portraits/c1_2.png'),
-  assetUrl('assets/portraits/c1_3.png'),  // blisko nokautu
+  assetUrl('assets/portraits/c1_0.webp'),  // pełne zdrowie
+  assetUrl('assets/portraits/c1_1.webp'),
+  assetUrl('assets/portraits/c1_2.webp'),
+  assetUrl('assets/portraits/c1_3.webp'),  // blisko nokautu
 ],
 ```
 
@@ -385,6 +385,40 @@ ostrzeżenie pojawi się w konsoli przeglądarki.
 Kolory w `palette` służą wyłącznie do generowania grafiki zastępczej. Ustaw je
 blisko kolorów swojej postaci, żeby placeholder wyglądał sensownie.
 
+### Kompresja grafik (WebP)
+
+Wszystkie grafiki są w **WebP**. Źródła (PNG/JPG) miały **34,5 MB**, a WebP ma
+**3,3 MB** — czyli **10,5× mniej** przy jakości nieodróżnialnej na ekranie.
+
+Konwersję robi [tools/compress-images.py](tools/compress-images.py):
+
+```bash
+npm run compress        # konwersja + raport jakości
+npm run compress:check  # tylko raport, bez zapisu
+```
+
+**Alfa jest bezstratna** (`alpha_quality=100`) — kompresji podlega wyłącznie
+kolor. Dzięki temu krawędzie sprite'ów nie dostają szumu ani ciemnej obwódki.
+
+**Jakość dobierana per kategoria** (bo każda trafia na ekran w innej skali):
+
+| Kategoria | Jakość | Rysowane jako | PSNR na ekranie |
+|---|---|---|---|
+| `sprites/` | 90 | klatka 224×192 (źródło 1024 px) | 51–57 dB |
+| `portraits/` | 88 | portret HUD 54×81 (źródło 1024 px) | 51–52 dB |
+| `backgrounds/` | 82 | tło 640×360 | 39–45 dB |
+
+**Skrypt mierzy jakość tak, jak widzi ją gracz** — skaluje obraz do rozmiaru
+docelowego i składa na tle. Pomiar 1:1 byłby mylący: sprite 1024 px nigdy nie
+trafia na ekran w pełnej rozdzielczości, więc mierzyłby szczegóły, których nikt
+nie zobaczy.
+
+> Tło `bgr.webp` ma niższy wynik (39 dB) niż reszta, bo jego źródłem był JPEG —
+> artefakty kompresji zostają w obrazie na zawsze. Nie przekracza ~42 dB nawet
+> przy jakości 100, więc progi w skrypcie są ustawione per kategoria.
+
+Skrypt przerywa z błędem, jeśli którykolwiek plik spadnie poniżej progu jakości.
+
 ---
 
 ## Tło i ulica
@@ -393,8 +427,8 @@ Arena składa się z dwóch niezależnych grafik:
 
 | Plik | Rola | Rozmiar |
 |---|---|---|
-| `public/assets/backgrounds/bgr.jpg` | **Nieruchome tło** — nie rusza się przy przewijaniu | dowolny (skalowany „cover”) |
-| `public/assets/backgrounds/road.jpg` | **Ulica** — rozciągnięta na całą szerokość świata, przewijana z kamerą | dowolny (bardzo szeroki) |
+| `public/assets/backgrounds/bgr.webp` | **Nieruchome tło** — nie rusza się przy przewijaniu | dowolny (skalowany „cover”) |
+| `public/assets/backgrounds/road.webp` | **Ulica** — rozciągnięta na całą szerokość świata, przewijana z kamerą | dowolny (bardzo szeroki) |
 
 Kamera podąża za środkiem walki wewnątrz świata o szerokości **1280 px**
 (`WORLD_WIDTH`), pokazując okno 640 px. Gdy postacie idą w prawo, ulica
@@ -402,7 +436,7 @@ przesuwa się pod nimi, a tło pozostaje nieruchome — to daje wrażenie marszu
 w głąb ulicy.
 
 Wysokość ulicy na ekranie wyliczana jest **z proporcji grafiki**, więc podmiana
-`road.jpg` na inny plik nie zniekształci jej. Szerokość świata zmienisz w
+`road.webp` na inny plik nie zniekształci jej. Szerokość świata zmienisz w
 [constants.ts](src/game/constants.ts):
 
 ```ts
@@ -639,7 +673,7 @@ z zachowaniem proporcji, więc bardzo szeroka grafika zostanie przycięta od gó
 Użyj grafiki o proporcji zbliżonej do 16:9.
 
 **Ulica jest za wysoka lub za niska** — jej wysokość wynika z proporcji
-`road.jpg`. Jeśli chcesz ją ograniczyć, zmień zakres w `roadScreenHeight()`
+`road.webp`. Jeśli chcesz ją ograniczyć, zmień zakres w `roadScreenHeight()`
 w [draw.ts](src/game/render/draw.ts).
 
 **Konsola zgłasza problemy z konfiguracją** — komunikat `[Bijatyka] Problemy z

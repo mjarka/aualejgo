@@ -12,7 +12,7 @@ export const LOGICAL_H = 360;
 /**
  * Szerokosc swiata, po ktorej przewija sie kamera.
  *
- * Ulica (road.jpg) jest rozciagana dokladnie na te szerokosc, a kamera pokazuje
+ * Ulica (road.webp) jest rozciagana dokladnie na te szerokosc, a kamera pokazuje
  * jej fragment o szerokosci LOGICAL_W. Dzieki temu postacie ida w glab ulicy.
  */
 export const WORLD_WIDTH = 1280;

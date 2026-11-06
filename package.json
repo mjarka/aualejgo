@@ -8,7 +8,9 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "compress": "python tools/compress-images.py",
+    "compress:check": "python tools/compress-images.py --dry-run"
   },
   "dependencies": {
     "react": "^19.3.1",
